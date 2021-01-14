@@ -1,0 +1,4 @@
+1. Cylinder Geometry
+2. Sphere Geometry
+3. EnvMap for BasicLambertMaterial - reflective object
+4. Group - combine multiple mesh together

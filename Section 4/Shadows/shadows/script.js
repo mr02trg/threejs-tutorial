@@ -19,6 +19,8 @@ function init(){
    
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   document.body.appendChild( renderer.domElement );
   
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -26,6 +28,8 @@ function init(){
   const geometry = new THREE.SphereGeometry(1, 20, 15);
   const material = new THREE.MeshStandardMaterial({envMap: envMap});
   const sphere = new THREE.Mesh(geometry, material);
+  sphere.castShadow = true;
+  sphere.receiveShadow = true;
   
   const planeGeometry = new THREE.PlaneGeometry(15, 15);
   const planeMaterial = new THREE.MeshStandardMaterial();
@@ -53,7 +57,12 @@ function init(){
   
   lights.spot = new THREE.SpotLight(0xffffff,1,20,0.88,0.5);
   lights.spot.position.set(1,10,1);
-  
+  lights.spot.castShadow = true;
+  // shadow optimisation
+  lights.spot.shadow.camera.near = 3;
+  lights.spot.shadow.camera.far = 30;
+  lights.spot.shadow.mapSize.width = 1024;
+	lights.spot.shadow.mapSize.height = 1024;
   lights.spotCameraHelper = new THREE.CameraHelper( lights.spot.shadow.camera );
   lights.spotCameraHelper.visible = false;
   scene.add(lights.spotCameraHelper);

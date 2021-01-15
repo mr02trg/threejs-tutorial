@@ -9,10 +9,10 @@ function init(){
   let col = 0x605050;
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color( col );
-	scene.fog = new THREE.Fog( col, 10, 100 );
+	scene.fog = new THREE.Fog( col, 10, 30 );
   
   camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  camera.position.set(0, 4, 7);
+  camera.position.set(0, 4, 8);
   camera.lookAt(0,1.5,0);
   
   const ambient = new THREE.HemisphereLight(0xffffbb, 0x080820);
@@ -36,11 +36,36 @@ function init(){
   scene.add( grid );
   
   //Add meshes here
-  
+  player = new THREE.Group();
+  const playerMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+  const bodyGeometry = new THREE.CylinderBufferGeometry(.3, .2, 1, 30, 20);
+  const headGeometry = new THREE.SphereBufferGeometry(.3, 30, 20);
+  const body = new THREE.Mesh(bodyGeometry, playerMaterial);
+  const head = new THREE.Mesh(headGeometry, playerMaterial);
+  head.position.y = 1;
+  player.add(body);
+  player.add(head);
+  scene.add(player);
+
   
   //Add cameras
+  cameras = [];
+  cameraIndex = 0;
+  const followCam = new THREE.Object3D();
+  followCam.position.copy(camera.position);
+  player.add(followCam);
+  cameras.push(followCam);
+
+  const frontCam = new THREE.Object3D();
+  frontCam.position.set(0, 3, -8);
+  player.add(frontCam);
+  cameras.push(frontCam);
+
+  const overheadCam = new THREE.Object3D();
+  overheadCam.position.set(0, 20, 0);
+  cameras.push(overheadCam);
   
-  
+  addKeyboardControl();
   const btn = document.getElementById('camera-btn');
   btn.addEventListener('click', changeCamera);
   
@@ -124,7 +149,7 @@ function update(){
   }
   
   //Add camera lerping
-  
+  camera.position.lerp(cameras[cameraIndex].getWorldPosition(new THREE.Vector3()), .05);
   
   const pos = player.position.clone();
   pos.y += 3;

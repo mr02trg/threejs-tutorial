@@ -4,7 +4,6 @@ body{
 }
 
 #camera-btn{
-  display: none;
   position: absolute;
   right: 20px;
   bottom: 20px;

@@ -1,0 +1,8 @@
+1. fog
+2. PlaneGeometry + GridHelper
+3. Object3D base class
+    - position
+4. Camera Lerp 
+    - camera.position.lerp() within update function
+    - Blend the camera to the position of your created Object3D
+    - If your Object3D is a child of the 'player'/target; then the camera will follow your target (i.e. relative to the target movement);

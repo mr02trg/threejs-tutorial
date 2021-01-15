@@ -1,0 +1,16 @@
+Clock 
+    - keep track of time https://threejs.org/docs/index.html#api/en/core/Clock
+    - getElapsedTime () 
+    - getDelta ()
+
+Add an object B to another object A
+    - Create a hierachy
+    - Object B is now a child of object A
+    - Object B motion is now relative to Object A instead of the Scene object (root)
+
+Change object rotation point
+    - By default, mesh rotate around (0, 0 , 0) in their geometry
+    - Need to move the vertices to adjust the rotation point
+
+Geometry base class
+    - geometry.vertices to get a list of vertices of the geometry
